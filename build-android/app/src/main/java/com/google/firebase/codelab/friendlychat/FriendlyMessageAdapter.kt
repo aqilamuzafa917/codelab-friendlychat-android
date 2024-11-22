@@ -54,10 +54,25 @@ class FriendlyMessageAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: FriendlyMessage) {
-        if (options.snapshots[position].text != null) {
-            (holder as MessageViewHolder).bind(model)
-        } else {
-            (holder as ImageMessageViewHolder).bind(model)
+        // Safely check position before binding
+        val itemCount = itemCount
+        if (position < 0 || position >= itemCount) {
+            Log.e(TAG, "Invalid position: $position, itemCount: $itemCount")
+            return
+        }
+
+        val message = getItem(position)
+        when (holder) {
+            is MessageViewHolder -> {
+                if (message.text != null) {
+                    holder.bind(message)
+                }
+            }
+            is ImageMessageViewHolder -> {
+                if (message.imageUrl != null) {
+                    holder.bind(message)
+                }
+            }
         }
     }
 

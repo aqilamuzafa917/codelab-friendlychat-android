@@ -61,6 +61,7 @@ class SignInActivity : AppCompatActivity() {
                             AuthUI.IdpConfig.EmailBuilder().build(),
                             AuthUI.IdpConfig.GoogleBuilder().build(),
                     ))
+                    .setTheme(R.style.LoginTheme)
                     .build()
 
             signIn.launch(signInIntent)
